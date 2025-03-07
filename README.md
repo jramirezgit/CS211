@@ -8,7 +8,7 @@ become familiar with tools and debugging practices used in industry.
 ## Coding Projects ##
 ___
 ### Project 1: Elementary Cellular Automation ###
-* [Project 1]()
+* [Project 1](https://github.com/jramirezgit/CS211/tree/main/Project01)
 
 ### Project 2: Managing Dynamic Memory with C-Structs ###
 * [Project 2]()
