@@ -1,0 +1,3 @@
+C:/Users/jrami/OneDrive/Documents/GitHub/CS211/cmake-build-debug/CMakeFiles/CS211.dir
+C:/Users/jrami/OneDrive/Documents/GitHub/CS211/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/jrami/OneDrive/Documents/GitHub/CS211/cmake-build-debug/CMakeFiles/rebuild_cache.dir
