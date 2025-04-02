@@ -9,4 +9,5 @@ add_executable(CS211
         Project03/MinPopVote.c
         Project03/MinPopVote.h
         Project03/app.c
-        Project02/main.c)
+        Project02/main.c
+        Project04/main.c)
