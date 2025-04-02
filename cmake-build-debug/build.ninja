@@ -57,6 +57,38 @@ build CMakeFiles/CS211.dir/Project01/main.c.obj: C_COMPILER__CS211_unscanned_Deb
   TARGET_COMPILE_PDB = CMakeFiles\CS211.dir\
   TARGET_PDB = CS211.pdb
 
+build CMakeFiles/CS211.dir/Project03/test.c.obj: C_COMPILER__CS211_unscanned_Debug C$:/Users/jrami/OneDrive/Documents/GitHub/CS211/Project03/test.c || cmake_object_order_depends_target_CS211
+  DEP_FILE = CMakeFiles\CS211.dir\Project03\test.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CS211.dir
+  OBJECT_FILE_DIR = CMakeFiles\CS211.dir\Project03
+  TARGET_COMPILE_PDB = CMakeFiles\CS211.dir\
+  TARGET_PDB = CS211.pdb
+
+build CMakeFiles/CS211.dir/Project03/MinPopVote.c.obj: C_COMPILER__CS211_unscanned_Debug C$:/Users/jrami/OneDrive/Documents/GitHub/CS211/Project03/MinPopVote.c || cmake_object_order_depends_target_CS211
+  DEP_FILE = CMakeFiles\CS211.dir\Project03\MinPopVote.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CS211.dir
+  OBJECT_FILE_DIR = CMakeFiles\CS211.dir\Project03
+  TARGET_COMPILE_PDB = CMakeFiles\CS211.dir\
+  TARGET_PDB = CS211.pdb
+
+build CMakeFiles/CS211.dir/Project03/app.c.obj: C_COMPILER__CS211_unscanned_Debug C$:/Users/jrami/OneDrive/Documents/GitHub/CS211/Project03/app.c || cmake_object_order_depends_target_CS211
+  DEP_FILE = CMakeFiles\CS211.dir\Project03\app.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CS211.dir
+  OBJECT_FILE_DIR = CMakeFiles\CS211.dir\Project03
+  TARGET_COMPILE_PDB = CMakeFiles\CS211.dir\
+  TARGET_PDB = CS211.pdb
+
+build CMakeFiles/CS211.dir/Project02/main.c.obj: C_COMPILER__CS211_unscanned_Debug C$:/Users/jrami/OneDrive/Documents/GitHub/CS211/Project02/main.c || cmake_object_order_depends_target_CS211
+  DEP_FILE = CMakeFiles\CS211.dir\Project02\main.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CS211.dir
+  OBJECT_FILE_DIR = CMakeFiles\CS211.dir\Project02
+  TARGET_COMPILE_PDB = CMakeFiles\CS211.dir\
+  TARGET_PDB = CS211.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CS211
@@ -65,7 +97,7 @@ build CMakeFiles/CS211.dir/Project01/main.c.obj: C_COMPILER__CS211_unscanned_Deb
 #############################################
 # Link the executable CS211.exe
 
-build CS211.exe: C_EXECUTABLE_LINKER__CS211_Debug CMakeFiles/CS211.dir/Project01/main.c.obj
+build CS211.exe: C_EXECUTABLE_LINKER__CS211_Debug CMakeFiles/CS211.dir/Project01/main.c.obj CMakeFiles/CS211.dir/Project03/test.c.obj CMakeFiles/CS211.dir/Project03/MinPopVote.c.obj CMakeFiles/CS211.dir/Project03/app.c.obj CMakeFiles/CS211.dir/Project02/main.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\CS211.dir

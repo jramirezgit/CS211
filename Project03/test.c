@@ -68,6 +68,7 @@ bool test_totalPVs() {
     }
 
     printf(" Checking totalPVs() for 0 States:\n");
+    res = totalPVs(aStates, 0);
     if (res != 0) {
         printf(" Expected 0, actual %d\n", res);
         return false;
@@ -331,15 +332,201 @@ bool test_parseLine() {
     // Test Case 1: Valid Line
     strcpy(line, "Illinois,IL,20,6033744");
     result = parseLine(line, &myState);
+    if (!result || strcmp(myState.name, "Illinois") != 0 ||
+        strcmp(myState.postalCode, "IL") != 0 ||
+        myState.electoralVotes != 20 ||
+        myState.popularVotes != 6033744) {
+        printf("Test Case 1 Failed: Valid Line\n");
+        return false;
+    }
+
+    // Test Case 2: Line with newline
+    strcpy(line, "New York,NY,29,7500000\n");
+    result = parseLine(line, &myState);
+    if (!result || strcmp(myState.name, "New York") != 0 ||
+        strcmp(myState.postalCode, "NY") != 0 ||
+        myState.electoralVotes != 29 ||
+        myState.popularVotes != 7500000) {
+        printf("Test Case 2 Failed: Line with newline\n");
+        return false;
+    }
+
+    // Test Case 3: Line with two commas (invalid)
+    strcpy(line, "InvalidLine,two,parts");
+    result = parseLine(line, &myState);
+    if(result) {
+        printf("Test Case 3 Failed: Line with two commas\n");
+        return false;
+    }
+
+    // Test Case 4: Non-integer electoral votes
+    strcpy(line, "BadElectoral,ST,abc,1000");
+    result = parseLine(line, &myState);
+    if (!result || myState.electoralVotes != 0) {
+        printf("Test Case 4 Failed: Non-integer electoral votes\n");
+        return false;
+    }
+
+    // Test Case 5: Four commas (invalid)
+    strcpy(line, ",,,,");
+    result = parseLine(line, &myState);
+    if (result) {
+        printf("Test Case 5 Failed: Four commas\n");
+        return false;
+    }
+    return true;
 }
 
 bool test_readElectionData() {
+    State states[51];
+    int nStates = 0;
+    bool result;
+
+    // Test Case 1: Valid file with correct data.
+    FILE* testFile = fopen("test_valid.csv", "w");
+    if (!testFile) return false;
+    fprintf(testFile, "State1,ST,5,1000\n");
+    fprintf(testFile, "State2,AB,10,2000\n");
+    fprintf(testFile, "State3,CD,15,3000\n");
+    fclose(testFile);
+
+    result = readElectionData("test_valid.csv", states, &nStates);
+    if (!result || nStates != 3) {
+        printf("Test Case 1 Failed: Valid file not read correctly\n");
+        remove("test_valid.csv");
+        return false;
+    }
+    if (strcmp(states[0].name, "State1") != 0 || strcmp(states[0].postalCode, "ST") != 0 ||
+        states[0].electoralVotes != 5 || states[0].popularVotes != 1000) {
+        printf("Test Case 1 Failed: Incorrect data for State1\n");
+        remove("test_valid.csv");
+        return false;
+    }
+    if (strcmp(states[1].name, "State2") != 0 || strcmp(states[1].postalCode, "AB") != 0 ||
+        states[1].electoralVotes != 10 || states[1].popularVotes != 2000) {
+        printf("Test Case 2 Failed: Incorrect data for State2\n");
+        remove("test_valid.csv");
+        return false;
+    }
+    if (strcmp(states[2].name, "State3") != 0 || strcmp(states[2].postalCode, "CD") != 0 ||
+        states[2].electoralVotes != 15 || states[2].popularVotes != 3000) {
+        printf("Test Case 3 Failed: Incorrect data for State3\n");
+        remove("test_valid.csv");
+        return false;
+    }
+    remove("test_valid.csv");
+
+    // Test Case 2: File with invalid lines.
+    testFile = fopen("test_invalid.csv", "w");
+    if (!testFile) return false;
+    fprintf(testFile, "BadLine,OnlyTwo\n");
+    fprintf(testFile, "GoodLine,AB,10,2000\n");
+    fclose(testFile);
+
+    nStates = 0;
+    result = readElectionData("test_invalid.csv", states, &nStates);
+    if (!result || nStates != 1) {
+        printf("Test Case 2 Failed: Expected 1 valid state, got %d\n", nStates);
+        remove("test_invalid.csv");
+        return false;
+    }
+    if (strcmp(states[0].name, "GoodLine") != 0 || strcmp(states[0].postalCode, "AB") != 0 ||
+        states [0].electoralVotes != 10 || states[0].popularVotes != 2000) {
+        printf("Test Case 2 Failed: Valid states data incorrect\n");
+        remove("test_invalid.csv");
+        return false;
+    }
+    remove("test_invalid.csv");
+
+    // Test Case 3: Empty file.
+    testFile = fopen("test_empty.csv", "w");
+    if (!testFile) return false;
+    fclose(testFile);
+    nStates = 0;
+    result = readElectionData("test_empty.csv", states, &nStates);
+    if (!result || nStates != 0) {
+        printf("Test Case 3 Failed: Empty file should have nStates = 0\n");
+        remove("test_empty.csv");
+        return false;
+    }
+    remove("test_empty.csv");
+
+    // Test Case 4: Non-existent file.
+    result = readElectionData("nonexistent.csv", states, &nStates);
+    if (result) {
+        printf("Test Case 4 Failed: Non-existent file should return false\n");
+        return false;
     }
 
+    // Test Case 5: File exceeding 51 states.
+    testFile = fopen("test_full.csv", "w");
+    if (!testFile) return false;
+    for (int i = 0; i < 52; i++) {
+        fprintf(testFile, "States%d,ST%d,%d,%d\n", i, i, i*5, i*1000);
+    }
+    fclose(testFile);
+
+    nStates = 0;
+    result = readElectionData("test_full.csv", states, &nStates);
+    if (!result || nStates != 51) {
+        printf("Test Case 5 Failed: Expected 51 states, got %d\n", nStates);
+        remove("test_full.csv");
+        return false;
+    }
+    remove("test_full.csv");
+
+    return true;
+}
+
+
 bool test_minPVsSlow() {
+    int size = 5;
+    State states[4];
+
+    states[0].electoralVotes = 5;
+    states[0].popularVotes = 60;
+    strcpy(states[0].name, "A");
+
+    states[1].electoralVotes = 2;
+    states[1].popularVotes = 20;
+    strcpy(states[1].name, "B");
+
+    states[2].electoralVotes = 8;
+    states[2].popularVotes = 70;
+    strcpy(states[2].name, "C");
+
+    states[3].electoralVotes = 3;
+    states[3].popularVotes = 30;
+    strcpy(states[3].name, "D");
+
+    MinInfo res = minPopVoteToWin(states, 4);
+    bool expected = (res.subsetPVs == 47);
+    return expected;
 }
 
 bool test_minPVsFast() {
+    int size = 5;
+    State states[4];
+
+    states[0].electoralVotes = 5;
+    states[0].popularVotes = 60;
+    strcpy(states[0].name, "A");
+
+    states[1].electoralVotes = 2;
+    states[1].popularVotes = 20;
+    strcpy(states[1].name, "B");
+
+    states[2].electoralVotes = 8;
+    states[2].popularVotes = 70;
+    strcpy(states[2].name, "C");
+
+    states[3].electoralVotes = 3;
+    states[3].popularVotes = 30;
+    strcpy(states[3].name, "D");
+
+    MinInfo res = minPopVoteToWinFast(states, 4);
+    bool expected = (res.subsetPVs == 47);
+    return expected;
 }
 
 int main() {
