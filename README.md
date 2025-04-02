@@ -11,7 +11,7 @@ ___
 * [Project 1](https://github.com/jramirezgit/CS211/tree/main/Project01)
 
 ### Project 2: Managing Dynamic Memory with C-Structs ###
-* [Project 2]()
+* [Project 2](https://github.com/jramirezgit/CS211/tree/main/Project02)
 
 ### Project 3: Win 80% of Votes but Lose Presidency??? ###
-* [Project 3]()
+* [Project 3](https://github.com/jramirezgit/CS211/tree/main/Project03)
